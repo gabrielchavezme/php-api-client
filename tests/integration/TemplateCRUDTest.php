@@ -4,14 +4,15 @@ namespace Mifiel\Tests\Integration;
 use Mifiel\ApiClient,
     Mifiel\Template;
 
-class TemplateCRUDTest extends MifielTests {
+class TemplateCRUDTest {
   private static $id;
 
   public function getTemplate() {
-    $this->setTokens();
-    if (self::$id) {
-      return Template::find(self::$id);
-    }
+    ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $templates = Template::all();
     return reset($templates);
   }
@@ -20,7 +21,11 @@ class TemplateCRUDTest extends MifielTests {
    * @group internet
    */
   public function testCreate() {
-    $this->setTokens();
+    ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $template = new Template([
       'name' => 'some template name',
       'content' => '<field name="some">SOME</field>'
@@ -50,7 +55,11 @@ class TemplateCRUDTest extends MifielTests {
    * @group internet
    */
   public function testAll() {
-    $this->setTokens();
+    ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $templates = Template::all();
     $this->assertTrue(is_array($templates));
     $this->assertEquals('Mifiel\Template', get_class(reset($templates)));

@@ -1,4 +1,5 @@
 <?php
+
 namespace Mifiel;
 
 use GuzzleHttp\Psr7\Request,
@@ -8,41 +9,49 @@ use GuzzleHttp\Psr7\Request,
     GuzzleHttp\HandlerStack,
     Mifiel\Digest\ApiAuthGemDigest;
 
-class ApiClient {
+
+class ApiClient
+{
 
   private static $appId;
   private static $appSecret;
   private static $client;
   private static $url;
 
-  public static function setTokens($appId, $appSecret) {
+  public static function setTokens($appId, $appSecret)
+  {
     self::$appId = $appId;
     self::$appSecret = $appSecret;
-    self::$url = 'https://www.mifiel.com/api/v1/';
+    self::$url = 'https://sandbox.mifiel.com/api/v1/';
     self::setClient();
   }
 
-  public static function get($path, $params=array()) {
+  public static function get($path, $params = array())
+  {
     return self::request('GET', $path, $params);
   }
 
-  public static function post($path, $params=array(), $multipart=false) {
+  public static function post($path, $params = array(), $multipart = false)
+  {
     return self::request('POST', $path, $params, $multipart);
   }
 
-  public static function delete($path) {
+  public static function delete($path)
+  {
     return self::request('DELETE', $path);
   }
 
-  public static function put($path, $params=array(), $multipart=false) {
+  public static function put($path, $params = array(), $multipart = false)
+  {
     return self::request('PUT', $path, $params, $multipart);
   }
 
-  private static function request($type, $path, $params=array(), $multipart=false) {
+  private static function request($type, $path, $params = array(), $multipart = false)
+  {
     $options = [];
     if ($multipart) {
       $options['multipart'] = self::build_multipart($params);
-    } elseif(!empty($params)) {
+    } elseif (!empty($params)) {
       $options['json'] = $params;
     }
     // $options['headers'] = [
@@ -51,18 +60,20 @@ class ApiClient {
     return self::$client->request(strtoupper($type), $path, $options);
   }
 
-  private static function build_multipart($params) {
+  private static function build_multipart($params)
+  {
     $multipart_arr = array();
     foreach ($params as $name => $value) {
       $field = self::build_field($name, $value);
-      if ($field){
+      if ($field) {
         array_push($multipart_arr, $field);
       }
     }
     return $multipart_arr;
   }
 
-  private static function build_field($name, $value) {
+  private static function build_field($name, $value)
+  {
     if (is_array($value) && isset($value['filename'])) {
       return [
         'name'      => $name,
@@ -71,7 +82,7 @@ class ApiClient {
       ];
     }
     if (!empty($value) && gettype($value) != 'NULL') {
-      if (is_bool($value)){
+      if (is_bool($value)) {
         $value = $value === true ? '1' : '0';
       } elseif (is_array($value) || is_object($value)) {
         $value = json_encode($value);
@@ -85,8 +96,9 @@ class ApiClient {
     return false;
   }
 
-  public static function url($url=null){
-    if ($url){
+  public static function url($url = null)
+  {
+    if ($url) {
       self::$url = $url;
       self::setClient();
     } else {
@@ -94,7 +106,8 @@ class ApiClient {
     }
   }
 
-  public static function appId($appId=null) {
+  public static function appId($appId = null)
+  {
     if ($appId) {
       self::$appId = $appId;
       self::setClient();
@@ -103,7 +116,8 @@ class ApiClient {
     return self::$appId;
   }
 
-  public static function appSecret($appSecret=null) {
+  public static function appSecret($appSecret = null)
+  {
     if ($appSecret) {
       self::$appSecret = $appSecret;
       self::setClient();
@@ -131,7 +145,8 @@ class ApiClient {
     ]);
   }
 
-  public static function getClient() {
+  public static function getClient()
+  {
     return self::$client;
   }
 }

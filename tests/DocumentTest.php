@@ -5,11 +5,12 @@ use Mifiel\ApiClient,
     Mifiel\Document,
     Mockery as m;
 
+use PHPUnit\Framework\TestCase;
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class DocumentTest extends \PHPUnit_Framework_TestCase {
+class DocumentTest extends TestCase {
 
   /**
    * @after

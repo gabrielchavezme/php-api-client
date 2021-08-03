@@ -4,12 +4,13 @@ namespace Mifiel\Tests;
 use Mifiel\ApiClient,
     Mifiel\Certificate,
     Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class CertificateTest extends \PHPUnit_Framework_TestCase {
+class CertificateTest extends TestCase {
 
   /**
    * @after
@@ -72,7 +73,7 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
       ->andReturn($mockResponse)
       ->once();
 
-    Certificate::find('some-id');
+    Certificate::find('07320f00-f504-47e0-8ff6-78378d2faca4');
   }
 
   public function testSetGetProperties() {

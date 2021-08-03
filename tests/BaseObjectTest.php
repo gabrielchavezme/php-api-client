@@ -4,12 +4,13 @@ namespace Mifiel\Tests;
 use Mifiel\ApiClient,
     Mifiel\BaseObject,
     Mifiel\ArgumentError;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BaseObjectTest extends \PHPUnit_Framework_TestCase {
+class BaseObjectTest extends TestCase {
   public function testCheckRequiredArgsOK() {
     $required = [
       'some' => 'string',
@@ -35,7 +36,7 @@ class BaseObjectTest extends \PHPUnit_Framework_TestCase {
       'some' => 'blah',
       'other' => 'blah1'
     ];
-    $this->setExpectedException('Mifiel\ArgumentError');
+    $this->expectException('Mifiel\ArgumentError');
     BaseObject::checkRequiredArgs($required, $args);
   }
 

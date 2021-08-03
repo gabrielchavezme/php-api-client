@@ -4,12 +4,13 @@ namespace Mifiel\Tests;
 use Mifiel\ApiClient,
     Mifiel\Template,
     Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class TemplateTest extends \PHPUnit_Framework_TestCase {
+class TemplateTest extends TestCase {
 
   /**
    * @after

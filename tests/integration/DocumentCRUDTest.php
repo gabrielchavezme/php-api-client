@@ -10,7 +10,11 @@ class DocumentCRUDTest extends MifielTests {
   private static $id;
 
   public function getDocument() {
-    $this->setTokens();
+    ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     if (self::$id) {
       return Document::find(self::$id);
     }
@@ -22,7 +26,11 @@ class DocumentCRUDTest extends MifielTests {
    * @group internet
    */
   public function testSaveCreate() {
-    $this->setTokens();
+   ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $document = new Document([
       'original_hash' => self::ORIGINAL_HASH,
       'name' => 'some.pdf',
@@ -42,7 +50,11 @@ class DocumentCRUDTest extends MifielTests {
    * @group internet
    */
   public function testSaveDocCreate() {
-    $this->setTokens();
+   ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $document = new Document([
       'file_path' => './tests/fixtures/example.pdf',
     ]);
@@ -57,7 +69,11 @@ class DocumentCRUDTest extends MifielTests {
    * @group internet
    */
   public function testSaveFile() {
-    $this->setTokens();
+   ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $document = $this->getDocument();
     $path = 'tmp/the-file.pdf';
     $document->saveFile($path);
@@ -68,7 +84,11 @@ class DocumentCRUDTest extends MifielTests {
    * @group internet
    */
   public function testSaveFileSigned() {
-    $this->setTokens();
+   ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $document = $this->getDocument();
     $path = 'tmp/the-file-signed.pdf';
     $document->saveFileSigned($path);
@@ -79,7 +99,11 @@ class DocumentCRUDTest extends MifielTests {
    * @group internet
    */
   public function testSaveXml() {
-    $this->setTokens();
+   ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $document = $this->getDocument();
     $path = 'tmp/the-file.xml';
     $document->saveXml($path);
@@ -104,7 +128,11 @@ class DocumentCRUDTest extends MifielTests {
    * @group internet
    */
   public function testAll() {
-    $this->setTokens();
+   ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $documents = Document::all();
     $this->assertTrue(is_array($documents));
     $this->assertEquals('Mifiel\Document', get_class(reset($documents)));
