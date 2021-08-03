@@ -2,7 +2,7 @@
 namespace Mifiel\Tests;
 
 use Mifiel\ApiClient,
-    Mifiel\Certificate,
+    Mifiel\Template,
     Mockery as m;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class CertificateTest extends TestCase {
+class TemplateTest extends TestCase {
 
   /**
    * @after
@@ -22,30 +22,31 @@ class CertificateTest extends TestCase {
   }
 
   public function testCreate() {
-    $certificate = new Certificate([
-      'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
+    $template = new Template([
+      'name' => 'some template name',
+      'content' => '<field name="some">SOME</field>'
     ]);
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
-      ->with('keys', m::type('Array'), true)
+      ->with('templates', m::type('Array'), false)
       ->andReturn(new \GuzzleHttp\Psr7\Response)
       ->once();
 
-    $certificate->save();
+    $template->save();
   }
 
   public function testUpdate() {
-    $certificate = new Certificate();
-    $certificate->id = 'some-id';
+    $template = new Template();
+    $template->id = 'some-id';
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('put')
-      ->with('keys/some-id', array('id' => 'some-id'), true)
+      ->with('templates/some-id', array('id' => 'some-id'), false)
       ->andReturn(new \GuzzleHttp\Psr7\Response)
       ->once();
 
-    $certificate->save();
+    $template->save();
   }
 
   public function testAll() {
@@ -55,11 +56,11 @@ class CertificateTest extends TestCase {
                  ->andReturn('[{"id": "some-id"}]');
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
-      ->with('keys')
+      ->with('templates')
       ->andReturn($mockResponse)
       ->once();
 
-    $certificates = Certificate::all();
+    $templates = Template::all();
   }
 
   public function testFind() {
@@ -69,42 +70,32 @@ class CertificateTest extends TestCase {
                  ->andReturn('{"id": "some-id"}');
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
-      ->with('keys/some-id')
+      ->with('templates/some-id')
       ->andReturn($mockResponse)
       ->once();
 
-    Certificate::find('07320f00-f504-47e0-8ff6-78378d2faca4');
+    Template::find('some-id');
   }
 
   public function testSetGetProperties() {
-    $certificate = new Certificate([
-      'certificate_number' => '20001000000200001410'
+    $original_hash = hash('sha256', 'some-template-contents');
+    $template = new Template([
+      'original_hash' => $original_hash
     ]);
-    $this->assertEquals('20001000000200001410', $certificate->certificate_number);
+    $this->assertEquals($original_hash, $template->original_hash);
 
-    $certificate_number = 'blah';
-    $certificate->certificate_number = $certificate_number;
-    $this->assertEquals($certificate_number, $certificate->certificate_number);
+    $new_original_hash = 'blah';
+    $template->original_hash = $new_original_hash;
+    $this->assertEquals($new_original_hash, $template->original_hash);
   }
 
   public function testDelete() {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('delete')
-      ->with('keys/some-id')
+      ->with('templates/some-id')
       ->andReturn(new \GuzzleHttp\Psr7\Response)
       ->once();
 
-    Certificate::delete('some-id');
+    Template::delete('some-id');
   }
-
-  public function testSat() {
-    m::mock('alias:Mifiel\ApiClient')
-      ->shouldReceive('get')
-      ->with('keys/sat')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
-      ->once();
-
-    Certificate::sat();
-  }
-
 }

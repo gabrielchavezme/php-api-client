@@ -2,12 +2,12 @@
 namespace Mifiel\Tests;
 
 use Mifiel\ApiClient as Mifiel;
+use PHPUnit\Framework\TestCase;
 
-class ApiClientTest extends \PHPUnit_Framework_TestCase {
-
-  private $appId = 'appId';
-  private $appSecret = 'appSecret';
-  private $url = 'http://www.example.com/api/v1/';
+class ApiClientTest extends TestCase {
+  private $appId = '385d67ed1271279d521154b28e238af8683272fe';
+  private $appSecret = 'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA==';
+  private $url = 'https://sandbox.mifiel.com/api/v1/';
 
   public function testCreation() {
     Mifiel::setTokens($this->appId, $this->appSecret);

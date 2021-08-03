@@ -4,12 +4,16 @@ namespace Mifiel\Tests\Integration;
 use Mifiel\ApiClient,
     Mifiel\Certificate;
 
-class CertificateCRUDTest extends MifielTests {
+class CertificateCRUDTest {
 
   private static $id;
 
   public function getCertificate() {
-    $this->setTokens();
+    ApiClient::setTokens(
+      '385d67ed1271279d521154b28e238af8683272fe',
+      'Npqjeg4dI9bOQ1UKcYqQrmkm3qFxUYQZb6ccf+bvm0rLcCU0y1z+DdSYcDLuezgZ4W/NvnBR8jzQt9Gm54i0AA=='
+    );
+    ApiClient::url('https://sandbox.mifiel.com/api/v1/');
     $certificates = Certificate::all();
     return end($certificates);
   }
@@ -35,6 +39,7 @@ class CertificateCRUDTest extends MifielTests {
   public function testAll() {
     $this->setTokens();
     $certificates = Certificate::all();
+    var_dump($certificates);
     $this->assertTrue(is_array($certificates));
     $this->assertEquals('Mifiel\Certificate', get_class(reset($certificates)));
   }

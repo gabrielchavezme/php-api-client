@@ -5,11 +5,13 @@ use Mifiel\ApiClient,
     Mifiel\User,
     Mockery as m;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class UserTest extends \PHPUnit_Framework_TestCase {
+class UserTest extends TestCase {
 
   /**
    * @after
@@ -40,12 +42,12 @@ class UserTest extends \PHPUnit_Framework_TestCase {
                  ->once()
                  ->andReturn('{"id": "some-id"}');
 
-    $this->setExpectedException('\Exception');
+    $this->expectException('\Exception');
     User::find('some-id');
   }
 
   public function testDelete() {
-    $this->setExpectedException('\Exception');
+    $this->expectException('\Exception');
 
     User::delete('some-id');
   }
